@@ -35,21 +35,31 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { InputNumberDecimal } from "@/components/InputNumberDecimal";
+import { FileState, MultiImageDropzone } from "@/components/MultiImageDropzone";
+import { useEdgeStore } from "@/lib/edgestore";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Id } from "@/convex/_generated/dataModel";
 
 type Props = {};
 
 export default function Page({}: Props) {
   const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
+    name: z.string(),
+    price_range_min: z.string(),
+    price_range_max: z.string(),
+    city: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
   });
   const [open, setOpen] = React.useState(false);
   const [searhCity, setSearchCity] = React.useState<string | undefined>(
@@ -60,6 +70,12 @@ export default function Page({}: Props) {
 
   const createCity = useMutation(api.city.create);
   const allCites = useQuery(api.city.getAll);
+  const upload = useMutation(api.photo.create);
+  const createRestaurant = useMutation(api.restaurant.create);
+
+  //upload file
+  const [fileStates, setFileStates] = React.useState<FileState[]>([]);
+  const { edgestore } = useEdgeStore();
 
   const addCity = async (name: string) => {
     setIsSubmitting(true);
@@ -76,27 +92,52 @@ export default function Page({}: Props) {
     setIsSubmitting(false);
   };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const uploadImage = async (url: string, restaurant_id: string) => {};
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+
+    const cityId: Id<"city"> = values.city as unknown as Id<"city">;
+    const restaurant = await createRestaurant({
+      name: values.name,
+      price_range_min: values.price_range_min,
+      price_range_max: values.price_range_max,
+      city: cityId,
+    });
+    toast.success("Restaurant behasil disimpan!");
+    if (fileStates.length > 0) {
+      await Promise.all(
+        fileStates.map(async (item) => {
+          try {
+            const res = await edgestore.publicFiles.upload({
+              file: item.file as File,
+            });
+            await upload({ url: res.url, restaurant_id: restaurant });
+            toast.success("Foto terupload!");
+          } catch (err) {
+            console.error(err);
+          }
+        })
+      );
+    }
+
+    setIsSubmitting(false);
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-20">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {/* CITY */}
           <FormField
             control={form.control}
-            name="username"
+            name="city"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
+              <FormItem className="flex  items-center">
+                <Label className="mr-4">Pilih Kota: </Label>
                 <FormControl>
-                  {allCites ? (
-                    <FormItem>
-                      <Label>Pilih Kota: </Label>
+                  <FormItem>
+                    {allCites ? (
                       <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                           <Button
@@ -136,13 +177,15 @@ export default function Page({}: Props) {
                                 {allCites.map((city) => (
                                   <CommandItem
                                     key={city._id}
-                                    value={city.name}
+                                    value={city._id}
                                     onSelect={(currentValue) => {
+                                      form.setValue("city", currentValue);
                                       setValue(
                                         currentValue === value
                                           ? ""
                                           : currentValue
                                       );
+
                                       setOpen(false);
                                     }}
                                   >
@@ -162,20 +205,84 @@ export default function Page({}: Props) {
                           </Command>
                         </PopoverContent>
                       </Popover>
-                    </FormItem>
-                  ) : (
-                    <LoaderPinwheel />
-                  )}
+                    ) : (
+                      <LoaderPinwheel />
+                    )}
+                  </FormItem>
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          {/* Restaurant */}
+          {/* Nama Restaurant */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nama Restaurant</FormLabel>
+                <FormControl>
+                  <FormItem>
+                    <Input {...field} />
+                  </FormItem>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Price Range */}
+          <div>
+            <Label>Kisaran Harga (per orang)</Label>
+            <Select
+              onValueChange={(value) => {
+                switch (value) {
+                  case "murah":
+                    form.setValue("price_range_min", "0");
+                    form.setValue("price_range_max", "50,000");
+                    return;
+                  case "sedang":
+                    form.setValue("price_range_min", "50,000");
+                    form.setValue("price_range_max", "100,000");
+                    return;
+                  case "mahal":
+                    form.setValue("price_range_min", "100,000");
+                    form.setValue("price_range_max", "150,000");
+                    return;
+                  case "sangatmahal":
+                    form.setValue("price_range_min", "150,000");
+                    form.setValue("price_range_max", "300,000");
+                    return;
+                }
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Price Range" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="murah">{"< Rp. 50,000"}</SelectItem>
+                <SelectItem value="sedang">Rp. 50,000 - 100,000</SelectItem>
+                <SelectItem value="mahal">Rp. 100,000 - 150,000</SelectItem>
+                <SelectItem value="sangatmahal">{"> Rp. 150,000"}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Photo */}
+
+          <MultiImageDropzone
+            value={fileStates}
+            onChange={(files) => {
+              setFileStates(files);
+              console.log(fileStates);
+            }}
+            dropzoneOptions={{
+              maxFiles: 6,
+            }}
+          />
+
+          <Button disabled={IsSubmitting}>Simpan</Button>
         </form>
       </Form>
     </main>

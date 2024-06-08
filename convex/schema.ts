@@ -11,11 +11,16 @@ export default defineSchema({
     price_range_min: v.string(),
     price_range_max: v.string(),
     city: v.id("city"),
-    photo: v.id("photos"),
-    rating: v.number(),
-  }),
+  }).index("by_city", ["city"]),
 
-  photos: defineTable({
+  photo: defineTable({
     url: v.string(),
+    restaurant: v.id("restaurant"),
+  }).index("by_restaurant", ["restaurant"]),
+
+  testimony: defineTable({
+    username: v.string(),
+    comment: v.string(),
+    restaurant_id: v.id("restaurant"),
   }),
 });

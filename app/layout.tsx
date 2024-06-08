@@ -4,11 +4,12 @@ import "./globals.css";
 import { ConvexClientProvider } from "@/components/provider/ConvexClientProvider";
 
 import { Toaster, toast } from "sonner";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Quicksand({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Gacha Restaurant",
+  title: "What To Eat?",
   description: "Developed by Ricky",
 };
 
@@ -21,8 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ConvexClientProvider>
-          <Toaster />
-          {children}
+          <EdgeStoreProvider>
+            <Toaster />
+            {children}
+          </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>
