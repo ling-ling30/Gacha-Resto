@@ -30,23 +30,6 @@ export const getAll = query({
   },
 });
 
-export const fetchRandomRestaurantByCity = query({
-  args: {
-    city_id: v.id("city"),
-  },
-  handler: async (ctx, args) => {
-    const restaurants = await ctx.db
-      .query("restaurant")
-      .withIndex("by_city", (q) => q.eq("city", args.city_id))
-      .collect();
-    if (restaurants.length === 0) {
-      return null; // No restaurants found for the given city_id
-    }
-
-    return restaurants[randomIndex];
-  },
-});
-
 export const fetchAllRestaurantByCity = query({
   args: {
     city_id: v.optional(v.id("city")),
