@@ -26,6 +26,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import Photo from "@/components/Photo";
 import Restaurant from "@/components/Restaurant";
 import RandomRestaurant from "@/components/RandomRestaurant";
+import SpinWheel from "@/components/SpinWheel";
 
 export default function Home() {
   const allCites = useQuery(api.city.getAll);
@@ -55,6 +56,13 @@ export default function Home() {
   };
   return (
     <main className="flex min-h-screen w-full flex-col items-center space-y-8 p-24">
+      <section>
+        <h1>Spin Wheel</h1>
+        <div>
+          <SpinWheel />
+        </div>
+      </section>
+
       <Button variant={"link"}>
         <Link href={"/add"}>Tambah Restaurant</Link>
       </Button>
