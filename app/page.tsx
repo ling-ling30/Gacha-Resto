@@ -55,14 +55,7 @@ export default function Home() {
     }
   };
   return (
-    <main className="flex min-h-screen w-full flex-col items-center space-y-8 p-24">
-      <section>
-        <h1>Spin Wheel</h1>
-        <div>
-          <SpinWheel />
-        </div>
-      </section>
-
+    <main className="flex min-h-screen w-full flex-col items-center space-y-8 p-24 max-sm:p-4">
       <Button variant={"link"}>
         <Link href={"/add"}>Tambah Restaurant</Link>
       </Button>
@@ -123,11 +116,12 @@ export default function Home() {
         )}
       </section>
 
-      {restaurants && <RandomRestaurant restaurants={restaurants} />}
+      {/* {restaurants && <RandomRestaurant restaurants={restaurants} />} */}
+      <div>{restaurants && <SpinWheel data={restaurants} />}</div>
 
       <section className="w-full">
         <div className="mt-2">
-          <Restaurant restaurants={restaurants} />
+          {restaurants && <Restaurant restaurants={restaurants} />}
         </div>
       </section>
     </main>
