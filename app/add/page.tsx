@@ -92,8 +92,6 @@ export default function Page({}: Props) {
     setIsSubmitting(false);
   };
 
-  const uploadImage = async (url: string, restaurant_id: string) => {};
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
 
