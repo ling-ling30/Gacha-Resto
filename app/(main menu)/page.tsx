@@ -27,6 +27,11 @@ import Photo from "@/components/Photo";
 import Restaurant from "@/components/Restaurant";
 import RandomRestaurant from "@/components/RandomRestaurant";
 import SpinWheel from "@/components/SpinWheel";
+import Image from "next/image";
+
+import front_image from "../../public/assets/people-eating-sweet-delicious-cake.jpg";
+import { honk, patrick } from "@/components/font";
+import useScreenSize from "@/components/hook/useScreenSize";
 
 export default function Home() {
   const allCites = useQuery(api.city.getAll);
@@ -54,8 +59,38 @@ export default function Home() {
       toast.error(`Gagal menambahkan Kota ${name}!`);
     }
   };
+  const screenWidth = useScreenSize();
   return (
-    <main className="flex min-h-screen w-full flex-col items-center space-y-8 p-24 max-sm:p-4">
+    <main className="flex min-h-[2000px] w-full flex-col items-center space-y-8 p-24 max-sm:p-4 flex-wrap">
+      <section className="w-full flex flex-wrap">
+        <div className="flex w-1/2">
+          <Image
+            alt=""
+            src={front_image}
+            width={350}
+            height={600}
+            className=" scale-x-[-1]"
+          />
+          {screenWidth > 1400 && (
+            <Image
+              alt=""
+              src={front_image}
+              width={350}
+              height={600}
+              className=""
+            />
+          )}
+        </div>
+
+        <div className="h-full max-md:p-5 flex-1 2xl:p-32 lg:p-20 flex items-center flex-col text-center justify-center">
+          <h1 className={`${patrick.className} lg:text-2xl 2xl:text-4xl `}>
+            {
+              "One cannot think well, love well, sleep well, if one has not dined well."
+            }
+          </h1>
+          <p className={`${patrick.className}`}>- Virginia Woolf</p>
+        </div>
+      </section>
       <Button variant={"link"}>
         <Link href={"/add"}>Tambah Restaurant</Link>
       </Button>
@@ -116,8 +151,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* {restaurants && <RandomRestaurant restaurants={restaurants} />} */}
-      <div>{restaurants && <SpinWheel data={restaurants} />}</div>
+      {/* <div>{restaurants && <SpinWheel data={restaurants} />}</div> */}
 
       <section className="w-full">
         <div className="mt-2">
