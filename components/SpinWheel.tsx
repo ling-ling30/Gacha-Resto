@@ -110,7 +110,7 @@ const SpinWheel = ({ data }: Props) => {
                 return (
                   <div
                     key={index}
-                    className={`absolute w-1/2 aspect-square bg-gray-200 border-b p-1 bg-transparent origin-bottom-right z-0 `}
+                    className={`absolute w-1/2 aspect-square bg-gray-200 border-b p-1 bg-transparent origin-bottom-right z-0  pointer-events-none`}
                     style={{
                       transform: `rotate(${angle}deg)`,
                     }}
