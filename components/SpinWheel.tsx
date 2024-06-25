@@ -3,6 +3,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import Photo from "./Photo";
+import { RestaurantHoverCard } from "./hoverCard";
 
 type Props = {
   data: {
@@ -28,6 +29,18 @@ const data = [
   { name: "restaurant apik 10" },
   { name: "restaurant apik 11" },
   { name: "restaurant apik 12" },
+  { name: "restaurant apik 13" },
+  { name: "restaurant apik 14" },
+  { name: "restaurant apik 15" },
+  { name: "restaurant apik 16" },
+  { name: "restaurant apik 17" },
+  { name: "restaurant apik 18" },
+  { name: "restaurant apik 19" },
+  { name: "restaurant apik 20" },
+  { name: "restaurant apik 21" },
+  { name: "restaurant apik 22" },
+  { name: "restaurant apik 23" },
+  { name: "restaurant apik 24" },
 ];
 
 const SpinWheel = ({ data }: Props) => {
@@ -78,7 +91,7 @@ const SpinWheel = ({ data }: Props) => {
         <p>tidak ada restaurant untuk dipilih</p>
       ) : (
         <>
-          <div className="flex flex-col items-center z-10 relative">
+          <div className="flex flex-col items-center z-1 relative ">
             <div
               className="absolute z-50 border-8 border-l-red-600 border-transparent left-2 top-[48%]"
               style={{
@@ -93,16 +106,19 @@ const SpinWheel = ({ data }: Props) => {
             >
               {data.map((item, index) => {
                 const angle = (360 / data.length) * index;
+
                 return (
                   <div
                     key={index}
-                    className={`absolute w-1/2 aspect-square bg-gray-200 border-r p-1 bg-transparent origin-bottom-right z-0 `}
+                    className={`absolute w-1/2 aspect-square bg-gray-200 border-b p-1 bg-transparent origin-bottom-right z-0 `}
                     style={{
                       transform: `rotate(${angle}deg)`,
                     }}
                   >
-                    <span className="block absolute bottom-0  mr-24 max-md:text-xs md:text-md  md:text-md pb-2 pl-5 ">
-                      {item.name}
+                    <span
+                      className={`block absolute bottom-0 mr-10 ${data.length > 40 && "text-[8px]"} max-md:text-xs md:text-md md:text-md pb-1 pl-3 `}
+                    >
+                      {data.length > 20 ? index + 1 : item.name}
                     </span>
                   </div>
                 );
@@ -111,7 +127,7 @@ const SpinWheel = ({ data }: Props) => {
           </div>
 
           <Button
-            className="mt-8 px-6 py-2 text-white rounded disabled:opacity-50 w-full"
+            className="mt-8 px-6 py-2 text-white rounded disabled:opacity-50 w-full z-50"
             onClick={spin}
             disabled={isSpinning}
           >
