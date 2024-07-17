@@ -82,10 +82,10 @@ export default function Page({}: Props) {
     try {
       toast.loading("Menambahkan Kota...");
       const response = await createCity({ name });
-      toast.success(`Kota ${name} telah ditambahkan !`);
+      toast.success(`${name} has benn added!`);
     } catch (error) {
       console.error(error);
-      toast.error(`Gagal menambahkan Kota ${name}!`);
+      toast.error(`Failed to add ${name}!`);
     }
 
     setSearchCity("");
@@ -175,7 +175,7 @@ export default function Page({}: Props) {
                                   variant={"outline"}
                                   onClick={() => addCity(searhCity!)}
                                   disabled={IsSubmitting}
-                                >{`Tambah Kota ${searhCity}`}</Button>
+                                >{`Add city ${searhCity}`}</Button>
                               </CommandEmpty>
                               <CommandGroup>
                                 {allCites.map((city) => (

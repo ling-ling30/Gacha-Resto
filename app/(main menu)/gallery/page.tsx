@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import InfiniteScroll from "./_components/InfiniteScroll";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import EmblaCarousel from "./_components/EmblaCarousel";
 
 type Props = {};
 
@@ -16,9 +16,15 @@ export default function Page({}: Props) {
   if (!restaurants) {
     return "loading..";
   }
+  const slides = [1, 2, 3, 4, 5];
   return (
-    <div>
-      <InfiniteScroll data={restaurants!} />
+    <div className="w-full flex justify-center items-center h-[80vh]">
+      <div className="container mx-auto py-10">
+        <EmblaCarousel
+          slides={restaurants}
+          options={{ loop: true, align: "center" }}
+        />
+      </div>
     </div>
   );
 }

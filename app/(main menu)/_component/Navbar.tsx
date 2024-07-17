@@ -57,7 +57,7 @@ export default function Navbar({ className }: Props) {
             variant={"link"}
             className={`${path === "/city" && "bg-orange-300"} sm:text-2xl`}
           >
-            City
+            <Link href={"/city"}>City</Link>
           </Button>
         </section>
       </nav>

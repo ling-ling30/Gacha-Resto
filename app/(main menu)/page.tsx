@@ -32,21 +32,10 @@ import Image from "next/image";
 import front_image from "../../public/assets/people-eating-sweet-delicious-cake.jpg";
 import { honk, patrick } from "@/components/font";
 import useScreenSize from "@/components/hook/useScreenSize";
+import { DialogPickResaurant } from "./_component/DialogPickResaurant";
 
 export default function Home() {
-  const allCites = useQuery(api.city.getAll);
   const createCity = useMutation(api.city.create);
-
-  const [open, setOpen] = React.useState(false);
-  const [cityId, setCityId] = React.useState<Id<"city"> | undefined>(undefined);
-  const [searchCity, setSearchCity] = React.useState<string | undefined>(
-    undefined
-  );
-  const [IsSubmitting, setIsSubmitting] = React.useState<boolean>(false);
-
-  const restaurants = useQuery(api.restaurant.fetchAllRestaurantByCity, {
-    city_id: cityId,
-  });
 
   const addCity = async (name: string) => {
     setIsSubmitting(true);
@@ -88,73 +77,8 @@ export default function Home() {
             <Button size={"lg"} className="bg-[#ffb464]">
               <Link href={"/add"}>Add a restaurant</Link>
             </Button>
-            <Button size={"lg"} className="bg-[#FD8D6D]">
-              <Link href={"/roll"}>Surprise me!</Link>
-            </Button>
+            <DialogPickResaurant />
           </section>
-        </div>
-      </section>
-
-      <section>
-        {allCites ? (
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-[200px] justify-between"
-              >
-                {cityId
-                  ? allCites.find((city) => city._id === cityId)?.name
-                  : "Choose a city..."}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-              <Command>
-                <CommandInput
-                  onChangeCapture={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    const query = e.target.value;
-                    const newQuery = capitalizeFirstLetter(query);
-                    setSearchCity(newQuery);
-                  }}
-                  placeholder="Search..."
-                />
-                <CommandList>
-                  <CommandEmpty>
-                    <Button
-                      variant={"outline"}
-                      onClick={() => addCity(searchCity!)}
-                      disabled={IsSubmitting}
-                    >{`Tambah Kota ${searchCity}`}</Button>
-                  </CommandEmpty>
-                  <CommandGroup>
-                    {allCites.map((city) => (
-                      <CommandItem
-                        key={city._id}
-                        value={city._id}
-                        onSelect={(currentValue) => {
-                          setCityId(currentValue as Id<"city">);
-                          setOpen(false);
-                        }}
-                      >
-                        {city.name}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        ) : (
-          <LoaderPinwheel />
-        )}
-      </section>
-
-      <section className="w-full">
-        <div className="mt-2">
-          {restaurants && <Restaurant restaurants={restaurants} />}
         </div>
       </section>
     </main>
