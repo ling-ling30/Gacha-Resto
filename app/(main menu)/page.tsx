@@ -61,39 +61,40 @@ export default function Home() {
   };
   const screenWidth = useScreenSize();
   return (
-    <main className="flex min-h-[2000px] w-full flex-col items-center space-y-8 p-24 max-sm:p-4 flex-wrap">
+    <main className="flex w-full flex-col items-center space-y-8 p-24 max-sm:p-8 flex-wrap">
       <section className="w-full flex flex-wrap">
-        <div className="flex w-1/2">
+        <div className="flex justify-center flex-1 min-w-[300px]">
           <Image
             alt=""
             src={front_image}
             width={350}
             height={600}
-            className=" scale-x-[-1]"
+            className=" scale-x-[-1] bg-repeat"
           />
-          {screenWidth > 1400 && (
-            <Image
-              alt=""
-              src={front_image}
-              width={350}
-              height={600}
-              className=""
-            />
-          )}
         </div>
 
-        <div className="h-full max-md:p-5 flex-1 2xl:p-32 lg:p-20 flex items-center flex-col text-center justify-center">
-          <h1 className={`${patrick.className} lg:text-2xl 2xl:text-4xl `}>
-            {
-              "One cannot think well, love well, sleep well, if one has not dined well."
-            }
-          </h1>
-          <p className={`${patrick.className}`}>- Virginia Woolf</p>
+        <div className="h-full   flex-1 2xl:p-32 lg:p-20 md:p-12 flex items-center flex-col text-center justify-center space-y-4">
+          <section className="min-w-[266px]">
+            <h1
+              className={`${patrick.className}  2xl:text-4xl sm:text-2xl text-wrap`}
+            >
+              {
+                "One cannot think well, love well, sleep well, if one has not dined well."
+              }
+            </h1>
+            <p className={`${patrick.className}`}>- Virginia Woolf</p>
+          </section>
+          <section className="flex gap-4 flex-wrap justify-center">
+            <Button size={"lg"} className="bg-[#ffb464]">
+              <Link href={"/add"}>Add a restaurant</Link>
+            </Button>
+            <Button size={"lg"} className="bg-[#FD8D6D]">
+              <Link href={"/roll"}>Surprise me!</Link>
+            </Button>
+          </section>
         </div>
       </section>
-      <Button variant={"link"}>
-        <Link href={"/add"}>Tambah Restaurant</Link>
-      </Button>
+
       <section>
         {allCites ? (
           <Popover open={open} onOpenChange={setOpen}>
@@ -106,7 +107,7 @@ export default function Home() {
               >
                 {cityId
                   ? allCites.find((city) => city._id === cityId)?.name
-                  : "Pilih Kota..."}
+                  : "Choose a city..."}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
@@ -118,7 +119,7 @@ export default function Home() {
                     const newQuery = capitalizeFirstLetter(query);
                     setSearchCity(newQuery);
                   }}
-                  placeholder="Cari Kota ..."
+                  placeholder="Search..."
                 />
                 <CommandList>
                   <CommandEmpty>
@@ -150,8 +151,6 @@ export default function Home() {
           <LoaderPinwheel />
         )}
       </section>
-
-      {/* <div>{restaurants && <SpinWheel data={restaurants} />}</div> */}
 
       <section className="w-full">
         <div className="mt-2">

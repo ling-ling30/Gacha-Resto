@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { useQuery, useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import {
   Form,
@@ -123,16 +123,21 @@ export default function Page({}: Props) {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-20">
+    <main className="flex min-h-screen flex-col items-center justify-between p-20 ">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 text-lg"
+        >
           {/* CITY */}
           <FormField
             control={form.control}
             name="city"
             render={({ field }) => (
-              <FormItem className="flex  items-center">
-                <Label className="mr-4">Pilih Kota: </Label>
+              <FormItem className="flex space-x-5 items-center">
+                <Label className="mr-4 text-semibold text-xl">
+                  Choose a city{" "}
+                </Label>
                 <FormControl>
                   <FormItem>
                     {allCites ? (
@@ -141,13 +146,14 @@ export default function Page({}: Props) {
                           <Button
                             variant="outline"
                             role="combobox"
+                            size={"sm"}
                             aria-expanded={open}
                             className="w-[200px] justify-between"
                           >
                             {value
                               ? allCites.find((city) => city._id === value)
                                   ?.name
-                              : "Pilih Kota..."}
+                              : "Choose ..."}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </PopoverTrigger>
@@ -219,7 +225,9 @@ export default function Page({}: Props) {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nama Restaurant</FormLabel>
+                <FormLabel className="text-xl">
+                  Restaurant&apos;s name
+                </FormLabel>
                 <FormControl>
                   <FormItem>
                     <Input {...field} />
@@ -232,7 +240,7 @@ export default function Page({}: Props) {
 
           {/* Price Range */}
           <div>
-            <Label>Kisaran Harga (per orang)</Label>
+            <Label className="text-xl">Price Range (per Person)</Label>
             <Select
               onValueChange={(value) => {
                 switch (value) {
@@ -273,14 +281,16 @@ export default function Page({}: Props) {
             value={fileStates}
             onChange={(files) => {
               setFileStates(files);
-              console.log(fileStates);
             }}
+            className="bg-white"
             dropzoneOptions={{
               maxFiles: 6,
             }}
           />
 
-          <Button disabled={IsSubmitting}>Simpan</Button>
+          <Button className="bg-[#FF6A67]" disabled={IsSubmitting}>
+            Submit!
+          </Button>
         </form>
       </Form>
     </main>

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { honk, patrick } from "@/components/font";
 import useScreenSize from "@/components/hook/useScreenSize";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   className?: string;
@@ -35,18 +36,27 @@ export default function Navbar({ className }: Props) {
         <section className={`${honk.className} text-3xl`}>LOGO</section>
         <section className={`${patrick.className} flex sm:space-x-10 `}>
           <Button
+            className={`${path === "/add" && "bg-orange-300"} sm:text-2xl`}
+            variant={"link"}
+          >
+            <Link href={"/add"}>Add</Link>
+          </Button>
+          <Button
             className={`${path === "/" && "bg-orange-300"} sm:text-2xl`}
             variant={"link"}
           >
-            Home
+            <Link href={"/"}>Home</Link>
           </Button>
-          <Button className={`sm:text-2xl`} variant={"link"}>
-            About
+          <Button
+            variant={"link"}
+            className={`${path === "/gallery" && "bg-orange-300"} sm:text-2xl`}
+          >
+            <Link href={"/gallery"}>Gallery</Link>
           </Button>
-          <Button className={`sm:text-2xl`} variant={"link"}>
-            Galery
-          </Button>
-          <Button className={`sm:text-2xl`} variant={"link"}>
+          <Button
+            variant={"link"}
+            className={`${path === "/city" && "bg-orange-300"} sm:text-2xl`}
+          >
             City
           </Button>
         </section>

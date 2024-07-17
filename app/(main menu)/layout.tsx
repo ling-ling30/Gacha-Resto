@@ -13,9 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <main className="overflow-hidden min-h-screen bg-gradient-to-r from-red-100 via-red-50 to-red-100">
       <Navbar />
       {children}
-    </>
+    </main>
   );
 }
