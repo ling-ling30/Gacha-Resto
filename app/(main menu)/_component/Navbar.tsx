@@ -47,32 +47,32 @@ export default function Navbar({ className }: Props) {
           className={`${patrick.className} flex sm:space-x-5  md:space-x-10 `}
         >
           <Button
-            className={`${path === "/add" && "bg-orange-300"} sm:text-lg md:text-2xl`}
+            className={`${path === "/add" && "bg-orange-300"} sm:text-sm max-sm:px-2 md:text-2xl`}
             variant={"link"}
           >
             <Link href={"/add"}>Add</Link>
           </Button>
           <Button
-            className={`${path === "/" && "bg-orange-300"}  sm:text-lg md:text-2xl`}
+            className={`${path === "/" && "bg-orange-300"}  sm:text-sm max-sm:px-2 md:text-2xl`}
             variant={"link"}
           >
             <Link href={"/"}>Home</Link>
           </Button>
           <Button
             variant={"link"}
-            className={`${path === "/gallery" && "bg-orange-300"} sm:text-lg md:text-2xl`}
+            className={`${path === "/gallery" && "bg-orange-300"} sm:text-sm max-sm:px-2 md:text-2xl`}
           >
             <Link href={"/gallery"}>Gallery</Link>
           </Button>
           <Button
             variant={"link"}
-            className={`${path === "/city" && "bg-orange-300"} sm:text-lg md:text-2xl`}
+            className={`${path === "/city" && "bg-orange-300"} sm:text-sm max-sm:px-2 md:text-2xl`}
           >
             <Link href={"/city"}>City</Link>
           </Button>
           <Button
             variant={"link"}
-            className={`${path === "/restaurant" && "bg-orange-300"} sm:text-lg md:text-2xl`}
+            className={`${path === "/restaurant" && "bg-orange-300"} sm:text-sm max-sm:px-2 md:text-2xl`}
           >
             <Link href={"/restaurant"}>What to eat?</Link>
           </Button>

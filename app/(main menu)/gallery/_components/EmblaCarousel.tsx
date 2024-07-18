@@ -131,10 +131,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        <div className="flex -ml-2">
+        <div className="flex">
           {slides.map((item, index) => (
-            <div key={item._id} className="flex-[0_0_40%] min-w-0 pl-2">
-              <div className="embla__slide__number h-full text-4xl font-semibold flex items-center justify-center rounded-2xl shadow-[inset_0_0_0_0.2rem_var(--detail-medium-contrast)] transition-transform duration-300">
+            <div
+              key={item._id}
+              className="flex-[0_0_100%] sm:flex-[0_0_50%] md:flex-[0_0_40%] min-w-0 px-2"
+            >
+              <div className="embla__slide__number h-full text-2xl sm:text-3xl md:text-4xl font-semibold flex items-center justify-center rounded-2xl shadow-[inset_0_0_0_0.2rem_var(--detail-medium-contrast)] transition-transform duration-300">
                 <RestaurantCard key={item._id} {...item} />
               </div>
             </div>
@@ -142,20 +145,17 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         </div>
         <button
           onClick={scrollPrev}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full p-2"
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full p-1 sm:p-2 text-sm sm:text-base"
         >
-          &#8592; {/* Left arrow */}
+          &#8592;
         </button>
         <button
           onClick={scrollNext}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full p-2"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full p-1 sm:p-2 text-sm sm:text-base"
         >
-          &#8594; {/* Right arrow */}
+          &#8594;
         </button>
       </div>
-      {/* <div className="mt-2 text-center">
-        Current Slide: {selectedIndex + 1} / {slides.length}
-      </div> */}
     </div>
   );
 };
