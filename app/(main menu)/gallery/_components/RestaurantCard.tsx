@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState, useRef } from "react";
 import {
   Carousel,
@@ -25,6 +26,7 @@ export const RestaurantCard = ({
   city,
   price_range_min,
   price_range_max,
+  classname,
 }: {
   _id: Id<"restaurant">;
   _creationTime: number;
@@ -32,17 +34,14 @@ export const RestaurantCard = ({
   city: Id<"city">;
   price_range_min: string;
   price_range_max: string;
+  classname?: string;
 }) => {
   return (
-    <Card className=" bg-[#FDBA74]">
+    <Card className={cn("bg-[#ffd3c5] p-6", classname)}>
       <CardHeader>
-        <CardTitle>
-          <div className="font-semibold ">{name}</div>
-        </CardTitle>
+        <CardTitle>{name}</CardTitle>
         <CardDescription>
-          <div className="font-semibold">
-            Rp. {price_range_min} - Rp. {price_range_max}
-          </div>
+          Rp. {price_range_min} - Rp. {price_range_max}
         </CardDescription>
       </CardHeader>
       <CardContent className="">

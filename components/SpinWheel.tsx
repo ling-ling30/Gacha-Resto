@@ -1,9 +1,7 @@
-// src/components/SpinWheel.tsx
 import { Id } from "@/convex/_generated/dataModel";
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import Photo from "./Photo";
-import { RestaurantHoverCard } from "./hoverCard";
 
 type Props = {
   data: {

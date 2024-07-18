@@ -47,3 +47,29 @@ export const fetchAllRestaurantByCity = query({
     }
   },
 });
+
+export const fetchRandomRestaurant = query({
+  args: {
+    city_id: v.optional(v.id("city")),
+    trigger: v.number(), // Add this line
+  },
+  handler: async (ctx, args) => {
+    let restaurants;
+
+    if (args.city_id) {
+      restaurants = await ctx.db
+        .query("restaurant")
+        .withIndex("by_city", (q) => q.eq("city", args.city_id!))
+        .collect();
+    } else {
+      restaurants = await ctx.db.query("restaurant").collect();
+    }
+
+    if (restaurants.length === 0) {
+      return null;
+    }
+
+    const randomIndex = Math.floor(Math.random() * restaurants.length);
+    return restaurants[randomIndex];
+  },
+});

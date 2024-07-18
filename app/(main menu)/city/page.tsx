@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {};
 
@@ -31,25 +33,38 @@ export default function Page({}: Props) {
   };
 
   return (
-    <main className="w-full h-full flex justify-center mt-16 space-y-4">
+    <main className="w-full h-full flex flex-col justify-center mt-20 space-y-4 p-20  ">
       <section className="space-y-10">
         <h1 className="text-4xl font-semibold">City List :</h1>
         <Input
           value={searchCity}
           onChange={(e) => setSearchCity(e.target.value)}
           placeholder="Search..."
+          className="max-w-xl py-6"
         />
-        <section className="space-y-5">
-          {filteredCities?.map((city) => {
+      </section>
+      <section className="gap-6 sm:grid-cols-2 grid">
+        {filteredCities ? (
+          filteredCities?.map((city) => {
             return (
-              <Card key={city._id}>
-                <CardContent className="flex items-center justify-center p-6">
-                  <span className="text-3xl font-semibold">{city.name}</span>
-                </CardContent>
-              </Card>
+              <Button
+                size={"lg"}
+                key={city._id}
+                variant={"outline"}
+                className="py-10 text-3xl font-semibold bg-[#FFD3C5] hover:bg-orange-300"
+              >
+                <Link href={`/city/${city._id}`}>{city.name}</Link>
+              </Button>
             );
-          })}
-        </section>
+          })
+        ) : (
+          <>
+            <Skeleton className="h-24 w-full" />
+            <Skeleton className="h-24 w-full" />
+            <Skeleton className="h-24 w-full" />
+            <Skeleton className="h-24 w-full" />
+          </>
+        )}
       </section>
     </main>
   );

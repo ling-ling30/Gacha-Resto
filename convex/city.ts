@@ -27,3 +27,16 @@ export const getAll = query({
     return cities;
   },
 });
+
+export const getbyId = query({
+  args: {
+    id: v.optional(v.id("city")),
+  },
+  handler: async (ctx, args) => {
+    if (args.id) {
+      const city = await ctx.db.get(args.id!);
+      return city;
+    }
+    return null;
+  },
+});

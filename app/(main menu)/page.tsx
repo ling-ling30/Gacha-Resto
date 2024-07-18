@@ -31,27 +31,13 @@ import Image from "next/image";
 
 import front_image from "../../public/assets/people-eating-sweet-delicious-cake.jpg";
 import { honk, patrick } from "@/components/font";
-import useScreenSize from "@/components/hook/useScreenSize";
-import { DialogPickResaurant } from "./_component/DialogPickResaurant";
 
 export default function Home() {
   const createCity = useMutation(api.city.create);
 
-  const addCity = async (name: string) => {
-    setIsSubmitting(true);
-    try {
-      toast.loading("Menambahkan Kota...");
-      const response = await createCity({ name });
-      toast.success(`Kota ${name} telah ditambahkan !`);
-    } catch (error) {
-      console.error(error);
-      toast.error(`Gagal menambahkan Kota ${name}!`);
-    }
-  };
-  const screenWidth = useScreenSize();
   return (
-    <main className="flex w-full flex-col items-center space-y-8 p-24 max-sm:p-8 flex-wrap">
-      <section className="w-full flex flex-wrap">
+    <main className="flex w-full min-h-screen flex-col items-center space-y-8 p-24 max-sm:p-8 flex-wrap">
+      <section className="w-full flex flex-wrap h-full items-center">
         <div className="flex justify-center flex-1 min-w-[300px]">
           <Image
             alt=""
@@ -77,7 +63,9 @@ export default function Home() {
             <Button size={"lg"} className="bg-[#ffb464]">
               <Link href={"/add"}>Add a restaurant</Link>
             </Button>
-            <DialogPickResaurant />
+            <Button size={"lg"} className="bg-[#FD8D6D] hover:bg-[#ffd3c5]">
+              <Link href={"/restaurant"}>Surprise me!</Link>
+            </Button>
           </section>
         </div>
       </section>

@@ -124,7 +124,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   }, [emblaApi, isPaused]);
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto">
       <div
         className="overflow-hidden relative"
         ref={emblaRef}
@@ -142,13 +142,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         </div>
         <button
           onClick={scrollPrev}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full p-2"
         >
           &#8592; {/* Left arrow */}
         </button>
         <button
           onClick={scrollNext}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 rounded-full p-2"
         >
           &#8594; {/* Right arrow */}
         </button>
