@@ -19,6 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AddPhotoDialog } from "@/components/DialogAddPhoto";
 
 export const RestaurantCard = ({
   _id,
@@ -49,7 +50,7 @@ export const RestaurantCard = ({
           <Photo restaurant_id={_id} />
         </div>
       </CardContent>
-      {/* <AddPhotoDialog restaurant_id={_id} /> */}
+      <AddPhotoDialog restaurant_id={_id} />
     </Card>
   );
 };
