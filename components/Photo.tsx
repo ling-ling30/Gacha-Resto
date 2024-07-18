@@ -53,8 +53,8 @@ function Photo({ restaurant_id }: Props) {
           photos.map((photo, index) => {
             return (
               <CarouselItem key={index}>
-                <Card>
-                  <CardContent className="flex aspect-square items-center justify-center">
+                <Card className="p-0">
+                  <CardContent className="flex aspect-square items-center justify-center p-0">
                     <Image
                       className="w-[300px] h-[300px] object-contain"
                       key={photo._id}
