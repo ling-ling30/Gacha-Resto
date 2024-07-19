@@ -151,7 +151,7 @@ export default function AddRestaurantForm({}: Props) {
                         >
                           {value
                             ? allCites.find((city) => city._id === value)?.name
-                            : "Choose ..."}
+                            : "Choose or Add"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
@@ -165,7 +165,7 @@ export default function AddRestaurantForm({}: Props) {
                               const newQuery = capitalizeFirstLetter(query);
                               setSearchCity(newQuery);
                             }}
-                            placeholder="Cari Kota ..."
+                            placeholder="Search / Add ..."
                           />
                           <CommandList>
                             <CommandEmpty>
@@ -173,15 +173,15 @@ export default function AddRestaurantForm({}: Props) {
                                 variant={"outline"}
                                 onClick={() => addCity(searhCity!)}
                                 disabled={IsSubmitting}
-                              >{`Add city ${searhCity}`}</Button>
+                              >{`Add ${searhCity}`}</Button>
                             </CommandEmpty>
                             <CommandGroup>
                               {allCites.map((city) => (
                                 <CommandItem
                                   key={city._id}
-                                  value={city._id}
+                                  value={city.name}
                                   onSelect={(currentValue) => {
-                                    form.setValue("city", currentValue);
+                                    form.setValue("city", city._id);
                                     setValue(
                                       currentValue === value ? "" : currentValue
                                     );
